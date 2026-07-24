@@ -34,8 +34,9 @@ jobs:
 
       - name: Build
         env:
-          PICO_SDK_PATH: ${{ env.HOME }}/pico-sdk
+          PICO_SDK_PATH: /home/runner/pico-sdk
         run: |
+          rm -rf build
           mkdir -p build
           cd build
           cmake .. -G Ninja -DPICO_BOARD=pico
