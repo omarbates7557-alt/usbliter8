@@ -37,8 +37,10 @@ jobs:
           PICO_SDK_PATH: /home/runner/pico-sdk
         run: |
           rm -rf build
-          cmake -S . -B build -G Ninja -DPICO_BOARD=adafruit_feather_rp2040
-          cmake --build build
+          mkdir -p build
+          cd build
+          cmake .. -G Ninja -DPICO_BOARD=adafruit_feather_rp2040
+          cmake --build .
 
       - name: Upload UF2
         uses: actions/upload-artifact@v4
