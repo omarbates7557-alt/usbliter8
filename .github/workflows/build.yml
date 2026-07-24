@@ -23,21 +23,22 @@ jobs:
             ninja-build \
             gcc-arm-none-eabi \
             libnewlib-arm-none-eabi \
-            build-essential
+            build-essential \
+            git
 
       - name: Clone Pico SDK
         run: |
-          git clone https://github.com/raspberrypi/pico-sdk.git $HOME/pico-sdk
-          cd $HOME/pico-sdk
-          git submodule update --init
+          git clone https://github.com/raspberrypi/pico-sdk.git "$HOME/pico-sdk"
+          cd "$HOME/pico-sdk"
+          git submodule update --init --recursive
 
       - name: Build
         env:
-          PICO_SDK_PATH: $HOME/pico-sdk
+          PICO_SDK_PATH: ${{ env.HOME }}/pico-sdk
         run: |
-          mkdir build
+          mkdir -p build
           cd build
-          cmake .. -G Ninja -DBOARD=pico
+          cmake .. -G Ninja -DPICO_BOARD=pico
           cmake --build .
 
       - name: Upload UF2
